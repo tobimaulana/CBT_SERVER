@@ -41,7 +41,7 @@ router.post('/', function(req, res, next) {
 /* UBAH DATA */
 router.put('/', function(req, res, next) {
        Soal.update(req.body, {
-              where:{nim:req.body.nim}
+              where:{id:req.body.id}
        }).then( () => {
               res.json({
                      status:true,
@@ -60,7 +60,7 @@ router.put('/', function(req, res, next) {
 /* HAPUS DATA */
 router.delete('/', function(req, res, next) {
        Soal.destroy({
-              where:{nim:req.body.nim}
+              where:{id:req.body.id}
        }).then( () => {
               res.json({
                      status:true,
