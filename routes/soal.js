@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const { v4 : uuidv4 } = require('uuid'); //import uuid
 
+// import middleware_app
+var appToken = require("../middleware_app");
+
 // Panggil Model Soal
 var Soal = require('../models/soal');
 
@@ -74,6 +77,32 @@ router.delete('/', function(req, res, next) {
                      data:[]
               });
        });
+});
+
+
+router.get('/validasi/:id/:kunci', appToken, function(req,res,next){
+       var id = req.params.id; 
+       var kunci = req.params.kunci; 
+       Soal.findAll({ 
+              where:{ 
+                     id:id,  
+                     kunci:kunci,  
+              } 
+       })
+       .then( data => {      
+              res.json({   
+                     status:true,   
+                     pesan:"Berhasil Tampil",   
+                     data:data     
+              });       
+       })
+       .catch( err => {      
+              res.json({        
+                     status: false,     
+                     pesan: "Gagal tampil: " + err.message,      
+                     data:[]        
+              });        
+       });     
 });
 
 module.exports = router;
